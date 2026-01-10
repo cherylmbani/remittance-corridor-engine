@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "69ad95caa0a4fbaa108bae62d5cf4bc6b305b33f1ebd34487c44a818f7cf4c10"
+            "sha256": "3fad3ac5bc40d59a74b78a194cfa10ca21c6b9639f9267ba296e40503c7b671f"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -342,6 +342,13 @@
             "index": "pypi",
             "markers": "python_version >= '3.7'",
             "version": "==2.0.45"
+        },
+        "sqlalchemy-serializer": {
+            "hashes": [
+                "sha256:5e1f83fc6d8a4f7618100c1b9a6af949498210756b974527ec3c8c1ec7e1300f"
+            ],
+            "index": "pypi",
+            "version": "==1.4.12"
         },
         "sqlalchemy.orm": {
             "hashes": [

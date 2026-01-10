@@ -6,9 +6,43 @@ from sqlalchemy.orm import validates, relationship
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
 from datetime import datetime
+import re
+from flask_bcrypt import Bcrypt
 
 db=SQLAlchemy()
 migrate=Migrate()
+bcrypt=Bcrypt()
+
+class User(db.Model, SerializerMixin):
+    __tablename__="users"
+
+    id=db.Column(db.Interger, primary_key=True)
+    first_name=db.Column(db.String, nullable=False)
+    last_name=db.Column(db.String, nullable=False)
+    email=db.Column(db.Text, nullable=False, unique=True)
+    password_hash=db.Column(db.Text, nullable=False)
+    created_at=db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Validating email
+    @validates('email')
+    def validate_email(self, key, value):
+        if not re.match('[^@]+@+[^@]+\.[^@]+', value):
+            raise ValueError(" Email not correctly written")
+        return value
+    
+    # Hashing password
+    @property
+    def password(self):
+        raise AttributeError("Password is write-only!")
+    
+    @password.setter
+    def password(self, password):
+        pw_hash=bcrypt.generate_password_hash(password.encode('utf-8'))
+        self.password_hash=pw_hash.decode('utf-8')
+    
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(self.password_hash, password.encode('utf-8'))
+
 
 class Country(db.Model, SerializerMixin):
     __tablename__="countries"

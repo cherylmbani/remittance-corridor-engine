@@ -17,7 +17,10 @@ class Country(db.Model, SerializerMixin):
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String, unique=True)
     code=db.Column(db.String, unique=True)
+
     corridors=db.relationship('Corridor', back_populates='country')
+    
+    corridor_ids=association_proxy('corridors', 'id')
 
     def __repr__(self):
         return f"<Country: {self.id} {self.name}>"
@@ -31,9 +34,13 @@ class Corridor(db.Model, SerializerMixin):
     from_country=db.Column(db.Integer, db.ForeignKey('countries.id'))
     to_country=db.Column(db.Integer, db.ForeignKey('countries.id'))
     country_id=db.Column(db.Integer, db.ForeignKey('countries.id'))
+
     country=db.relationship('Country', back_populates="corridors")
     rates=db.relationship('Rate', back_populates='corridor')
     transactions=db.relationship('Transaction', back_populates="corridor")
+
+    rates_ids=association_proxy('rates', id)
+    transactions_ids=association_proxy('transactions', 'id')
 
     def __repr__(self):
         return f"<Corridor: {self.id}>"
@@ -46,6 +53,7 @@ class Rate(db.Model, SerializerMixin):
     id=db.Column(db.Integer, primary_key=True)
     rate=db.Column(db.Float, nullable=False)
     corridor_id=db.Column(db.Integer, db.ForeignKey('corridors.id'))
+
     corridor=db.relationship('Corridor', back_populates='rates')
 
     def __repr__(self):

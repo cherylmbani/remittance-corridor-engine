@@ -16,7 +16,7 @@ bcrypt=Bcrypt()
 class User(db.Model, SerializerMixin):
     __tablename__="users"
 
-    id=db.Column(db.Interger, primary_key=True)
+    id=db.Column(db.Integer, primary_key=True)
     first_name=db.Column(db.String, nullable=False)
     last_name=db.Column(db.String, nullable=False)
     email=db.Column(db.Text, nullable=False, unique=True)
@@ -26,7 +26,7 @@ class User(db.Model, SerializerMixin):
     # Validating email
     @validates('email')
     def validate_email(self, key, value):
-        if not re.match('[^@]+@+[^@]+\.[^@]+', value):
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", value):
             raise ValueError(" Email not correctly written")
         return value
     
@@ -46,15 +46,16 @@ class User(db.Model, SerializerMixin):
 
 class Country(db.Model, SerializerMixin):
     __tablename__="countries"
-    serialize_rules=('-corridors.country', )
+    serialize_rules=('-corridors_from.from_country_obj', '-corridors_to.to_country_obj')
 
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String, unique=True)
     code=db.Column(db.String, unique=True)
 
-    corridors=db.relationship('Corridor', back_populates='country')
-    
-    corridor_ids=association_proxy('corridors', 'id')
+    corridors_from =db.relationship('Corridor', back_populates='from_country_obj', foreign_keys='Corridor.from_country')
+    corridors_to =db.relationship('Corridor', back_populates='to_country_obj', foreign_keys='Corridor.to_country')
+
+    corridor_ids=association_proxy('corridors_from', 'id')
 
     def __repr__(self):
         return f"<Country: {self.id} {self.name}>"
@@ -62,18 +63,28 @@ class Country(db.Model, SerializerMixin):
     
 class Corridor(db.Model, SerializerMixin):
     __tablename__="corridors"
-    serialize_rules=('-country.corridors', '-rates.corridor', '-transactions.corridor')
+    serialize_rules=('-from_country_obj.corridors_from', '-to_country_obj.corridors_to',
+                 '-rates.corridor', '-transactions.corridor')
     
     id=db.Column(db.Integer, primary_key=True)
+
     from_country=db.Column(db.Integer, db.ForeignKey('countries.id'))
     to_country=db.Column(db.Integer, db.ForeignKey('countries.id'))
-    country_id=db.Column(db.Integer, db.ForeignKey('countries.id'))
-
-    country=db.relationship('Country', back_populates="corridors")
+    
+    from_country_obj = db.relationship(
+        'Country',
+        foreign_keys=[from_country],
+        back_populates='corridors_from'
+    )
+    to_country_obj = db.relationship(
+        'Country',
+        foreign_keys=[to_country],
+        back_populates='corridors_to'
+    )
     rates=db.relationship('Rate', back_populates='corridor')
     transactions=db.relationship('Transaction', back_populates="corridor")
 
-    rates_ids=association_proxy('rates', id)
+    rates_ids=association_proxy('rates', 'id')
     transactions_ids=association_proxy('transactions', 'id')
 
     def __repr__(self):

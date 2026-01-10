@@ -12,6 +12,7 @@ migrate=Migrate()
 
 class Country(db.Model, SerializerMixin):
     __tablename__="countries"
+    serialize_rules=('-corridors.country', )
 
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String, unique=True)
@@ -24,6 +25,7 @@ class Country(db.Model, SerializerMixin):
     
 class Corridor(db.Model, SerializerMixin):
     __tablename__="corridors"
+    serialize_rules=('-country.corridors', '-rates.corridor', '-transactions.corridor')
     
     id=db.Column(db.Integer, primary_key=True)
     from_country=db.Column(db.Integer, db.ForeignKey('countries.id'))
@@ -39,6 +41,7 @@ class Corridor(db.Model, SerializerMixin):
 
 class Rate(db.Model, SerializerMixin):
     __tablename__="rates"
+    serialize_rules=('-corridor.rates', )
 
     id=db.Column(db.Integer, primary_key=True)
     rate=db.Column(db.Float, nullable=False)
@@ -51,6 +54,7 @@ class Rate(db.Model, SerializerMixin):
 
 class Transaction(db.Model, SerializerMixin):
     __tablename__="transactions"
+    serialize_rules=('-corridor.transactions', )
 
     id=db.Column(db.Integer, primary_key=True)
     amount_sent=db.Column(db.Float, nullable=False)

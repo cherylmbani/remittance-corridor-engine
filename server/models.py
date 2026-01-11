@@ -16,6 +16,8 @@ bcrypt=Bcrypt()
 class User(db.Model, SerializerMixin):
     __tablename__="users"
 
+    serialize_only = ('id', 'first_name', 'last_name', 'email', 'created_at') 
+    
     id=db.Column(db.Integer, primary_key=True)
     first_name=db.Column(db.String, nullable=False)
     last_name=db.Column(db.String, nullable=False)
@@ -46,7 +48,8 @@ class User(db.Model, SerializerMixin):
 
 class Country(db.Model, SerializerMixin):
     __tablename__="countries"
-    serialize_rules=('-corridors_from.from_country_obj', '-corridors_to.to_country_obj')
+    
+    serialize_only = ('id', 'name', 'code')
 
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String, unique=True)
@@ -63,8 +66,8 @@ class Country(db.Model, SerializerMixin):
     
 class Corridor(db.Model, SerializerMixin):
     __tablename__="corridors"
-    serialize_rules=('-from_country_obj.corridors_from', '-to_country_obj.corridors_to',
-                 '-rates.corridor', '-transactions.corridor')
+    
+    serialize_only = ('id', 'from_country', 'to_country')
     
     id=db.Column(db.Integer, primary_key=True)
 
@@ -93,7 +96,8 @@ class Corridor(db.Model, SerializerMixin):
 
 class Rate(db.Model, SerializerMixin):
     __tablename__="rates"
-    serialize_rules=('-corridor.rates', )
+    
+    serialize_only = ('id', 'rate', 'corridor_id')
 
     id=db.Column(db.Integer, primary_key=True)
     rate=db.Column(db.Float, nullable=False)
@@ -107,7 +111,8 @@ class Rate(db.Model, SerializerMixin):
 
 class Transaction(db.Model, SerializerMixin):
     __tablename__="transactions"
-    serialize_rules=('-corridor.transactions', )
+    
+    serialize_only = ('id', 'amount_sent', 'amount_received', 'transaction_date', 'corridor_id')
 
     id=db.Column(db.Integer, primary_key=True)
     amount_sent=db.Column(db.Float, nullable=False)

@@ -115,6 +115,20 @@ This application is fully deployed and live on the internet:
 - **Frontend (Vercel):** https://remittance-corridor-frontend.vercel.app
 - **Backend API (Render):** https://remittance-corridor-engine.onrender.com
 
+### Project Structure
+- `/client` - React frontend (deployed to Vercel)
+- `/server` - Flask backend (deployed to Render)
+
+### Deployment Details
+- **Frontend:** React app deployed on Vercel
+- **Backend:** Flask API with SQLite database deployed on Render
+- **Database:** SQLite (for demo), ready for PostgreSQL upgrade
+
+### Environment Variables (Production)
+- `DATABASE_URL`: SQLite database connection
+- `SECRET_KEY`: Secure secret for sessions
+EOF
+
 ## MIT License
 MIT License © 2026 Cheryl Mbani  
 

@@ -17,8 +17,8 @@ function RateList() {
         try {
             // Fetch both rates and corridors
             const [ratesRes, corridorsRes] = await Promise.all([
-                fetch("http://127.0.0.1:5555/rates"),
-                fetch("http://127.0.0.1:5555/corridors")
+                fetch("https://remittance-corridor-engine.onrender.com/rates"),
+                fetch("https://remittance-corridor-engine.onrender.com/corridors")
             ]);
 
             if (!ratesRes.ok || !corridorsRes.ok) {
@@ -59,7 +59,7 @@ function RateList() {
         }
 
         try {
-            const response = await fetch(`http://127.0.0.1:5555/rates/${rateId}`, {
+            const response = await fetch(`https://remittance-corridor-engine.onrender.com/rates/${rateId}`, {
                 method: "DELETE"
             });
 
@@ -106,7 +106,7 @@ function RateList() {
         }
 
         try {
-            const response = await fetch(`http://127.0.0.1:5555/rates/${rate.id}`, {
+            const response = await fetch(`https://remittance-corridor-engine.onrender.com/rates/${rate.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"

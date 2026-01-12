@@ -13,7 +13,7 @@ function CountryList(){
 
     const fetchCountries = () => {
         setLoading(true);
-        fetch("http://127.0.0.1:5555/countries")
+        fetch("https://remittance-corridor-engine.onrender.com/countries")
         .then(res => res.json())
         .then(data => {
             setCountries(data);
@@ -33,7 +33,7 @@ function CountryList(){
         }
 
         try {
-            const response = await fetch(`http://127.0.0.1:5555/countries/${countryId}`, {
+            const response = await fetch(`https://remittance-corridor-engine.onrender.com/countries/${countryId}`, {
                 method: "DELETE"
             });
 
@@ -64,7 +64,7 @@ function CountryList(){
         }
 
         try {
-            const response = await fetch(`http://127.0.0.1:5555/countries/${country.id}`, {
+            const response = await fetch(`https://remittance-corridor-engine.onrender.com/countries/${country.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"

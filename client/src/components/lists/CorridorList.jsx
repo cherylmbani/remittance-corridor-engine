@@ -17,8 +17,8 @@ function CorridorList() {
         try {
             // Fetch both corridors and countries
             const [corridorsRes, countriesRes] = await Promise.all([
-                fetch("http://127.0.0.1:5555/corridors"),
-                fetch("http://127.0.0.1:5555/countries")
+                fetch("https://remittance-corridor-engine.onrender.com/corridors"),
+                fetch("https://remittance-corridor-engine.onrender.com/countries")
             ]);
 
             if (!corridorsRes.ok || !countriesRes.ok) {
@@ -59,7 +59,7 @@ function CorridorList() {
         }
 
         try {
-            const response = await fetch(`http://127.0.0.1:5555/corridors/${corridorId}`, {
+            const response = await fetch(`https://remittance-corridor-engine.onrender.com/corridors/${corridorId}`, {
                 method: "DELETE"
             });
 
@@ -99,7 +99,7 @@ function CorridorList() {
         }
 
         try {
-            const response = await fetch(`http://127.0.0.1:5555/corridors/${corridor.id}`, {
+            const response = await fetch(`https://remittance-corridor-engine.onrender.com/corridors/${corridor.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"

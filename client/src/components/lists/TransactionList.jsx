@@ -17,8 +17,8 @@ function TransactionList() {
         try {
             // Fetch both transactions and corridors
             const [transactionsRes, corridorsRes] = await Promise.all([
-                fetch("http://127.0.0.1:5555/transactions"),
-                fetch("http://127.0.0.1:5555/corridors")
+                fetch("https://remittance-corridor-engine.onrender.com/transactions"),
+                fetch("https://remittance-corridor-engine.onrender.com/corridors")
             ]);
 
             if (!transactionsRes.ok || !corridorsRes.ok) {
@@ -64,7 +64,7 @@ function TransactionList() {
         }
 
         try {
-            const response = await fetch(`http://127.0.0.1:5555/transactions/${transactionId}`, {
+            const response = await fetch(`https://remittance-corridor-engine.onrender.com/transactions/${transactionId}`, {
                 method: "DELETE"
             });
 
@@ -124,7 +124,7 @@ function TransactionList() {
         }
 
         try {
-            const response = await fetch(`http://127.0.0.1:5555/transactions/${transaction.id}`, {
+            const response = await fetch(`https://remittance-corridor-engine.onrender.com/transactions/${transaction.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"

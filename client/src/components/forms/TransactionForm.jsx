@@ -18,7 +18,7 @@ function TransactionForm({ onTransactionCreated }) {
         }
 
         try {
-            const response = await fetch("http://127.0.0.1:5555/transactions", {
+            const response = await fetch("https://remittance-corridor-engine.onrender.com/transactions", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

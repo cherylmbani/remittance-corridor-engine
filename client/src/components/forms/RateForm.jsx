@@ -8,7 +8,7 @@ function RateForm({ onRateCreated }) {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch("http://127.0.0.1:5555/corridors")
+        fetch("https://remittance-corridor-engine.onrender.com/corridors")
             .then(res => res.json())
             .then(setCorridors)
             .catch(err => setError("Failed to load corridors"));
@@ -33,7 +33,7 @@ function RateForm({ onRateCreated }) {
         }
 
         try {
-            const response = await fetch("http://127.0.0.1:5555/rates", {
+            const response = await fetch("https://remittance-corridor-engine.onrender.com/rates", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

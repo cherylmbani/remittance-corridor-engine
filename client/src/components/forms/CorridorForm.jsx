@@ -8,7 +8,7 @@ function CorridorForm({ onCorridorCreated }) {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch("http://127.0.0.1:5555/countries")
+        fetch("https://remittance-corridor-engine.onrender.com/countries")
             .then(res => res.json())
             .then(setCountries)
             .catch(err => setError("Failed to load countries"));
@@ -32,7 +32,7 @@ function CorridorForm({ onCorridorCreated }) {
         }
 
         try {
-            const response = await fetch("http://127.0.0.1:5555/corridors", {
+            const response = await fetch("https://remittance-corridor-engine.onrender.com/corridors", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

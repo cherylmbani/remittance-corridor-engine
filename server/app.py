@@ -367,7 +367,7 @@ class TransactionById(Resource):
     
 
 
-api.add_resource(Start, '/welcome')
+api.add_resource(Start, '/')
 api.add_resource(Signup, '/signup')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')

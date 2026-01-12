@@ -2,24 +2,30 @@ from flask import Flask, request, make_response, session, jsonify
 from flask_cors import CORS
 from models import User, Country, Corridor, Rate, Transaction, db, migrate, bcrypt
 from flask_restful import Api, Resource
+import os
 
+app = Flask(__name__)
 
+# Database configuration for Render
+database_url = os.environ.get('DATABASE_URL', 'sqlite:///remittance.db')
+# Fix for Render's PostgreSQL URL format
+if database_url and database_url.startswith('postgres://'):
+    database_url = database_url.replace('postgres://', 'postgresql://', 1)
 
-app=Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///remittance.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
-app.config['SECRET_KEY']='super_secret'
-app.json.compact=False
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'super_secret')
+app.json.compact = False
 
 CORS(app)
 db.init_app(app)
 migrate.init_app(app, db)
 bcrypt.init_app(app)
-api=Api(app)
+api = Api(app)
 
 class Start(Resource):
     def get(self):
-        response={'message': 'Welcome to Remittance Corridor Engine!'}
+        response = {'message': 'Welcome to Remittance Corridor Engine!'}
         return response, 200
 
 #aAuthentication routes

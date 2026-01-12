@@ -1,7 +1,7 @@
 import React from "react";
-import CountryList from "../components/list/CountryList";
+import CountryList from "../components/lists/CountryList";
 
-function CountryPage(){
+function CountriesPage(){
     return (
         <div className="country-page">
             <CountryList />
@@ -9,4 +9,4 @@ function CountryPage(){
 
     )
 }
-export default CountryPage;
+export default CountriesPage;

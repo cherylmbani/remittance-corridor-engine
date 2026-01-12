@@ -1,6 +1,6 @@
 import React, {useEffect, useState}from "react";
 
-function Country(){
+function CountryList(){
     const [countries, setCountries]=useState([]);
     const [loading, setLoading]=useState(true);
     const [error, setError]=useState(null);
@@ -35,4 +35,4 @@ function Country(){
     )
 
 }
-export default Country;
+export default CountryList;

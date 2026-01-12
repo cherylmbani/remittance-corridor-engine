@@ -139,3 +139,9 @@ The author is not liable for any damages arising from its use.
 
 
 
+
+## Deployment Verification
+- ✅ Frontend: Auto-deploy from main branch via Vercel
+- ✅ Backend: Manual deploy from main branch via Render
+- ✅ CI/CD: Vercel auto-deploys on git push to main
+- Test timestamp: Mon Jan 12 05:13:21 PM EAT 2026

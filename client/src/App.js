@@ -6,6 +6,7 @@ import CountriesPage from './pages/CountryPage';
 import CorridorsPage from './pages/CorridorPage';
 import RatesPage from './pages/RatesPage';
 import TransactionsPage from './pages/TransactionsPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (

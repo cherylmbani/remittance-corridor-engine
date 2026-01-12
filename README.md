@@ -108,6 +108,13 @@ http://localhost:5173
 
 ---
 
+## Deployment
+This application is fully deployed and live on the internet:
+
+### Live Applications
+- **Frontend (Vercel):** https://remittance-corridor-frontend.vercel.app
+- **Backend API (Render):** https://remittance-corridor-engine.onrender.com
+
 ## MIT License
 MIT License © 2026 Cheryl Mbani  
 

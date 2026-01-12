@@ -92,6 +92,12 @@ http://127.0.0.1:5555
 
 ---
 
+## Deployment
+This application is fully deployed and live on the internet:
+
+### Live Applications
+- **Backend API (Render):** https://remittance-corridor-engine.onrender.com
+
 ## Author
 Cheryl Mbani
 Junior Software Developer

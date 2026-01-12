@@ -1,19 +1,26 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-function LoginPage({ setUser }) {
+function Signup({ setUser }) {
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     
     const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         
-        const response = await fetch("http://127.0.0.1:5555/login", {
+        const response = await fetch("http://127.0.0.1:5555/signup", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({
+                first_name: firstName,
+                last_name: lastName,
+                email: email,
+                password: password
+            })
         });
 
         if (response.ok) {
@@ -22,7 +29,7 @@ function LoginPage({ setUser }) {
             setUser(user);
             navigate("/countries");
         } else {
-            alert("Login failed");
+            alert("Signup failed");
         }
     };
 
@@ -30,7 +37,9 @@ function LoginPage({ setUser }) {
         const demoUser = {
             id: 1,
             first_name: "Demo",
-            email: "demo@test.com"
+            last_name: "User",
+            email: "demo@test.com",
+            created_at: new Date().toISOString()
         };
         
         localStorage.setItem("user", JSON.stringify(demoUser));
@@ -40,9 +49,27 @@ function LoginPage({ setUser }) {
 
     return (
         <div>
-            <h1>Login</h1>
+            <h1>Sign Up</h1>
             
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>First Name:</label>
+                    <input
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required
+                    />
+                </div>
+                
+                <div>
+                    <label>Last Name:</label>
+                    <input
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        required
+                    />
+                </div>
+                
                 <div>
                     <label>Email:</label>
                     <input
@@ -63,16 +90,16 @@ function LoginPage({ setUser }) {
                     />
                 </div>
                 
-                <button type="submit">Login</button>
+                <button type="submit">Sign Up</button>
             </form>
             
-            <p><Link to="/signup">Sign up</Link></p>
+            <p><Link to="/login">Login instead</Link></p>
             
             <button onClick={handleSkip}>
-                Skip Login (Demo)
+                Skip Signup (Demo)
             </button>
         </div>
     );
 }
 
-export default LoginPage;
+export default Signup;

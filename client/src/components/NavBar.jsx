@@ -1,23 +1,41 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
+function NavBar({ user, setUser }) {
+    const navigate = useNavigate();
 
-function NavBar(){
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        setUser(null);
+        navigate('/login');
+    };
 
-    return(
+    return (
         <div>
-            <nav style={{ padding: "20px", background: "#f0f0f0" }}>
-                <div style={{ display: "flex", gap: "15px" }} >
-                    <NavLink to="/users">Users</NavLink>
-                    <NavLink to="/countries">Countries</NavLink>
-                    <NavLink to="/corridors">Corridors</NavLink>
-                    <NavLink to="/rates">Rates</NavLink>
-                    <NavLink to="/transactions">Transactions</NavLink>
-                </div>
+            <nav>
+                <h1>💰 Remittance Engine</h1>
+                
+                {user ? (
+                    <div>
+                        <span>Welcome, {user.first_name || user.name}!</span>
+                        
+                        <div>
+                            <NavLink to="/countries">Countries</NavLink>
+                            <NavLink to="/corridors">Corridors</NavLink>
+                            <NavLink to="/rates">Rates</NavLink>
+                            <NavLink to="/transactions">Transactions</NavLink>
+                            <button onClick={handleLogout}>Logout</button>
+                        </div>
+                    </div>
+                ) : (
+                    <div>
+                        <NavLink to="/login">Login</NavLink>
+                        <NavLink to="/signup">Sign Up</NavLink>
+                    </div>
+                )}
             </nav>
-
-
         </div>
     );
 }
+
 export default NavBar;
